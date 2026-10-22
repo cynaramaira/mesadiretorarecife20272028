@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparativo Mesa Diretora da Câmara do Recife - Jamildo.com</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --laranja-jamildo: #f83d03;
+      --azul-jamildo: #024796;
+      --azul-escuro: #012b5b;
+      --fundo: #f4f6fa;
+      --branco: #ffffff;
+      --texto: #1f2937;
+      --texto-suave: #6b7280;
+      --borda: #e5e7eb;
+      --verde-mudanca: #059669;
+      --cinza-badge: #eef2f6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--fundo);
+      color: var(--texto);
+      width: 100%;
+      height: 728px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .widget-container {
+      width: 100%;
+      height: 100%;
+      max-height: 728px;
+      display: flex;
+      flex-direction: column;
+      background: var(--branco);
+      position: relative;
+    }
+
+    /* Topo / Header */
+    .header {
+      background: linear-gradient(135deg, var(--azul-jamildo) 0%, var(--azul-escuro) 100%);
+      color: var(--branco);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 3px solid var(--laranja-jamildo);
+      flex-shrink: 0;
+    }
+
+    .header-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .badge-chapeu {
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: var(--laranja-jamildo);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .header-titulo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .logo-link img {
+      height: 34px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+    }
+
+    /* Barra de Navegação e Filtros */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--branco);
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--borda);
+      flex-shrink: 0;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tab-group {
+      display: inline-flex;
+      background: var(--cinza-badge);
+      padding: 3px;
+      border-radius: 8px;
+      gap: 2px;
+    }
+
+    .tab-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--texto-suave);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--azul-jamildo);
+      color: var(--branco);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    .summary-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+    }
+
+    .pill {
+      background: #eff6ff;
+      color: var(--azul-jamildo);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      border: 1px solid #bfdbfe;
+    }
+
+    .pill-gov {
+      background: #fff7ed;
+      color: #c2410c;
+      border-color: #fed7aa;
+    }
+
+    /* Área de Conteúdo Rolável */
+    .content-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 16px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--azul-jamildo) var(--cinza-badge);
+    }
+
+    .content-area::-webkit-scrollbar {
+      width: 6px;
+    }
+    .content-area::-webkit-scrollbar-thumb {
+      background-color: var(--azul-jamildo);
+      border-radius: 4px;
+    }
+
+    /* Grade Comparativa */
+    .compare-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cargo-row {
+      background: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .cargo-row:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+    }
+
+    .cargo-header {
+      background: #f8fafc;
+      padding: 6px 14px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--azul-jamildo);
+      border-bottom: 1px solid var(--borda);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cargo-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .card-periodo {
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .card-periodo:hover {
+      background: #fafcff;
+    }
+
+    .card-periodo.old {
+      background: #fcfcfd;
+      border-right: 1px solid var(--borda);
+    }
+
+    .card-periodo.new {
+      background: #ffffff;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--azul-jamildo);
+      background: #e2e8f0;
+      display: block;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      background: var(--laranja-jamildo);
+      color: var(--branco);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 4px;
+      line-height: 1;
+    }
+
+    .parlamentar-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .parlamentar-periodo-tag {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .tag-2025 {
+      color: var(--texto-suave);
+    }
+
+    .tag-2027 {
+      color: var(--laranja-jamildo);
+    }
+
+    .parlamentar-nome {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--texto);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-decoration: none;
+      display: block;
+    }
+
+    .parlamentar-nome:hover {
+      color: var(--laranja-jamildo);
+      text-decoration: underline;
+    }
+
+    .parlamentar-sub {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--texto-suave);
+      margin-top: 2px;
+    }
+
+    .partido-tag {
+      background: var(--cinza-badge);
+      color: var(--azul-escuro);
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 10px;
+    }
+
+    .status-badge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .status-mudou {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .status-manteve {
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+
+    .status-remanejado {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* Rodapé */
+    .footer {
+      background: #f8fafc;
+      padding: 8px 16px;
+      border-top: 1px solid var(--borda);
+      font-size: 11px;
+      color: var(--texto-suave);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .footer a {
+      color: var(--azul-jamildo);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Adaptações Mobile */
+    @media (max-width: 640px) {
+      .header-titulo {
+        font-size: 13px;
+      }
+      .logo-link img {
+        height: 26px;
+      }
+      .summary-pills {
+        display: none;
+      }
+      .cargo-cards {
+        grid-template-columns: 1fr;
+      }
+      .card-periodo.old {
+        border-right: none;
+        border-bottom: 1px dashed var(--borda);
+      }
+      .card-periodo {
+        padding: 8px 10px;
+      }
+      .avatar {
+        width: 42px;
+        height: 42px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="widget-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-info">
+        <span class="badge-chapeu">Poder Legislativo &bull; Recife</span>
+        <h1 class="header-titulo">Mesa Diretora: 2025-2026 vs 2027-2028</h1>
+      </div>
+      <a href="https://jamildo.com" target="_blank" rel="noopener" class="logo-link" title="Ir para Jamildo.com">
+        <img src="https://jamildo.com/media/uploads/brancologojamildo.png" alt="Jamildo.com">
+      </a>
+    </header>
+
+    <!-- Barra de Controles e Filtros -->
+    <div class="controls-bar">
+      <div class="tab-group">
+        <button class="tab-btn active" onclick="filtrarVisualizacao('todos', this)">Lado a Lado</button>
+        <button class="tab-btn" onclick="filtrarVisualizacao('2027', this)">Nova Mesa (2027-2028)</button>
+        <button class="tab-btn" onclick="filtrarVisualizacao('2025', this)">Mesa Atual (2025-2026)</button>
+      </div>
+
+      <div class="summary-pills">
+        <span class="pill pill-gov">Base Victor Marques: 8 de 9 cargos</span>
+        <span class="pill">37 parlamentares votantes</span>
+      </div>
+    </div>
+
+    <!-- Conteúdo com Scroll Interno -->
+    <main class="content-area">
+      <div class="compare-grid" id="gridComparativo"></div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+      <span>Fonte: Câmara Municipal do Recife / Portal da Transparência</span>
+      <span>Produzido para <a href="https://jamildo.com" target="_blank" rel="noopener">Jamildo.com</a></span>
+    </footer>
+  </div>
+
+  <script>
+    var dadosMesa = [
+      {
+        cargo: "Presidente",
+        atual: {
+          nome: "Romerinho Jatobá",
+          partido: "PSB",
+          votos: "36 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/160_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/160"
+        },
+        novo: {
+          nome: "Samuel Salazar",
+          partido: "MDB",
+          votos: "35 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/177_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/177",
+          status: "Novo Titular",
+          statusClass: "status-mudou"
+        }
+      },
+      {
+        cargo: "1º Vice-presidente",
+        atual: {
+          nome: "Zé Neto",
+          partido: "PSB",
+          votos: "36 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/415_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/415"
+        },
+        novo: {
+          nome: "Professora Ana Lúcia",
+          partido: "Republicanos",
+          votos: "35 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/165_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/165",
+          status: "Era 2ª Vice",
+          statusClass: "status-remanejado"
+        }
+      },
+      {
+        cargo: "2º Vice-presidente",
+        atual: {
+          nome: "Professora Ana Lúcia",
+          partido: "Republicanos",
+          votos: "35 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/165_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/165"
+        },
+        novo: {
+          nome: "Hélio Guabiraba",
+          partido: "PSB",
+          votos: "34 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/172_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/172",
+          status: "Novo na Mesa",
+          statusClass: "status-mudou"
+        }
+      },
+      {
+        cargo: "3º Vice-presidente",
+        atual: {
+          nome: "Aderaldo Pinto",
+          partido: "PSB",
+          votos: "35 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/145_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/145"
+        },
+        novo: {
+          nome: "Fred Ferreira",
+          partido: "PL",
+          votos: "32 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/163_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/163",
+          status: "Era 3º Secretário",
+          statusClass: "status-remanejado"
+        }
+      },
+      {
+        cargo: "1º Secretário",
+        atual: {
+          nome: "Eriberto Rafael",
+          partido: "PSB",
+          votos: "35 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/150_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/150"
+        },
+        novo: {
+          nome: "Marco Aurélio Filho",
+          partido: "PV",
+          votos: "Unanimidade",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/171_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores",
+          status: "Novo Titular",
+          statusClass: "status-mudou"
+        }
+      },
+      {
+        cargo: "2º Secretário",
+        atual: {
+          nome: "Cida Pedrosa",
+          partido: "PCdoB",
+          votos: "32 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/414_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/414"
+        },
+        novo: {
+          nome: "Gilberto Alves",
+          partido: "PRD",
+          votos: "36 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/127_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/127",
+          status: "Era 2º Suplente",
+          statusClass: "status-remanejado"
+        }
+      },
+      {
+        cargo: "3º Secretário",
+        atual: {
+          nome: "Fred Ferreira",
+          partido: "PL",
+          votos: "34 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/163_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/163"
+        },
+        novo: {
+          nome: "Carlos Muniz",
+          partido: "PSB",
+          votos: "36 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/405_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/405",
+          status: "Novo na Mesa",
+          statusClass: "status-mudou"
+        }
+      },
+      {
+        cargo: "1º Suplente",
+        atual: {
+          nome: "Fabiano Ferraz",
+          partido: "MDB",
+          votos: "36 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/410_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/410"
+        },
+        novo: {
+          nome: "Natália de Menudo",
+          partido: "PSB",
+          votos: "35 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/164_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/164",
+          status: "Nova na Mesa",
+          statusClass: "status-mudou"
+        }
+      },
+      {
+        cargo: "2º Suplente",
+        atual: {
+          nome: "Gilberto Alves",
+          partido: "PRD",
+          votos: "36 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/127_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/127"
+        },
+        novo: {
+          nome: "Chico Kiko",
+          partido: "PSB",
+          votos: "34 votos",
+          foto: "https://e-processo.recife.pe.leg.br/sapl_documentos/parlamentar/fotos/167_foto_parlamentar",
+          link: "https://transparencia.recife.pe.leg.br/legislativo/vereadores/item/167",
+          status: "Novo na Mesa",
+          statusClass: "status-mudou"
+        }
+      }
+    ];
+
+    function criarCard(dados, ano, subtitulo, tagClasse, statusHtml, ehAntigo) {
+      var classeBorda = ehAntigo ? "card-periodo old" : "card-periodo new";
+      var badgeEstilo = ehAntigo ? "" : 'style="background:var(--azul-jamildo);"';
+      
+      var html = '<div class="' + classeBorda + '">';
+      html += '  <div class="avatar-wrapper">';
+      html += '    <img class="avatar" src="' + dados.foto + '" alt="' + dados.nome + '" onerror="this.src=\'https://via.placeholder.com/96?text=Foto\'">';
+      html += '    <span class="avatar-badge" ' + badgeEstilo + '>' + ano + '</span>';
+      html += '  </div>';
+      html += '  <div class="parlamentar-info">';
+      html += '    <div style="display:flex; justify-content:space-between; align-items:center;">';
+      html += '      <div class="parlamentar-periodo-tag ' + tagClasse + '">' + subtitulo + '</div>';
+      if (statusHtml) {
+        html += statusHtml;
+      }
+      html += '    </div>';
+      html += '    <a href="' + dados.link + '" target="_blank" class="parlamentar-nome">' + dados.nome + '</a>';
+      html += '    <div class="parlamentar-sub">';
+      html += '      <span class="partido-tag">' + dados.partido + '</span>';
+      html += '      <span>' + dados.votos + '</span>';
+      html += '    </div>';
+      html += '  </div>';
+      html += '</div>';
+
+      return html;
+    }
+
+    function renderizar(modo) {
+      if (!modo) modo = "todos";
+      var container = document.getElementById("gridComparativo");
+      container.innerHTML = "";
+
+      dadosMesa.forEach(function(item) {
+        var row = document.createElement("div");
+        row.className = "cargo-row";
+
+        var statusBadge = '<span class="status-badge ' + item.novo.statusClass + '">' + item.novo.status + '</span>';
+
+        var card2025 = criarCard(item.atual, "25-26", "Mesa Atual", "tag-2025", "", true);
+        var card2027 = criarCard(item.novo, "27-28", "Eleito para 2027", "tag-2027", statusBadge, false);
+
+        var htmlCards = "";
+        if (modo === "todos") {
+          htmlCards = '<div class="cargo-cards">' + card2025 + card2027 + '</div>';
+        } else if (modo === "2027") {
+          htmlCards = '<div class="cargo-cards" style="grid-template-columns: 1fr;">' + card2027 + '</div>';
+        } else {
+          htmlCards = '<div class="cargo-cards" style="grid-template-columns: 1fr;">' + card2025 + '</div>';
+        }
+
+        var subInfo = modo === "todos" ? '<span style="font-size:10px; color:var(--texto-suave); font-weight:normal;">Mesa 2025 &rarr; Mesa 2027</span>' : '';
+
+        row.innerHTML = 
+          '<div class="cargo-header">' +
+          '  <span>' + item.cargo + '</span>' +
+          '  ' + subInfo +
+          '</div>' +
+          htmlCards;
+
+        container.appendChild(row);
+      });
+    }
+
+    function filtrarVisualizacao(modo, btn) {
+      var botoes = document.querySelectorAll(".tab-btn");
+      for (var i = 0; i < botoes.length; i++) {
+        botoes[i].classList.remove("active");
+      }
+      btn.classList.add("active");
+      renderizar(modo);
+    }
+
+    renderizar("todos");
+  </script>
+</body>
+</html>
